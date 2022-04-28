@@ -1,14 +1,13 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-
 	"github.com/faramarz-hosseini/anonymousEmailSender/api"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	r := gin.Default()
+	server := gin.Default()
 
-	api.SetAPIHandlers(r)
-	r.Run()
+	api.SetAPIHandlers(server)
+	service.Run()
 }

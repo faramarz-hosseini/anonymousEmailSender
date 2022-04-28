@@ -1,27 +1,25 @@
 package api
 
 import (
-	"fmt"
+	"github.com/faramarz-hosseini/anonymousEmailSender/rabbitmq"
+	"log"
+	"net/http"
+
 	"github.com/faramarz-hosseini/anonymousEmailSender/config"
 	"github.com/gin-gonic/gin"
-	"net/http"
-)
-
-var (
-	cfg *config.Config
-	err error
 )
 
 func init() {
-	cfg, err = config.LoadConfig("")
+	cfg, err := config.LoadConfig("")
 	if err != nil {
-		fmt.Errorf("could not load config: %v", err)
+		log.Fatalf("could not load config: %v", err)
 	}
+	rabbit := rabbitmq.GetRabbitMQ(cfg.RabbitHost)
 }
 
 func SetAPIHandlers(r *gin.Engine) {
 	r.GET("/", helloWorld)
-	r.POST("/send-email", sendEmail)
+	r.POST("/send-email", sendEmailRequest)
 }
 
 func helloWorld(c *gin.Context) {
@@ -31,6 +29,6 @@ func helloWorld(c *gin.Context) {
 	)
 }
 
-func sendEmail(c *gin.Context) {
+func sendEmailRequest(c *gin.Context) {
 
 }

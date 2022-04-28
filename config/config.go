@@ -6,11 +6,13 @@ import (
 )
 
 type Config struct {
-	Email string `mapstructure:"email"`
+	Email      string `mapstructure:"email"`
+	RabbitHost string `mapstructure:"rabbit_host"`
 }
 
 var defaults = map[string]string{
-	"email": "test@test.com",
+	"email":       "test@test.com",
+	"rabbit_host": "amqp://guest:guest@localhost:5672/",
 }
 
 func LoadConfig(configFile string) (*Config, error) {
