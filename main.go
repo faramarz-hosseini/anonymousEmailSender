@@ -6,8 +6,11 @@ import (
 )
 
 func main() {
-	server := gin.Default()
+	ginServer := gin.Default()
 
-	api.SetAPIHandlers(server)
-	service.Run()
+	server := api.InitializeServer(ginServer)
+	defer server.RabbitCon.Close()
+	defer server.RabbitChan.Close()
+
+	server.GinServer.Run()
 }
